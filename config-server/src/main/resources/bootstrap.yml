@@ -1,0 +1,14 @@
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+spring:
+    application:
+        name: config-server
+    cloud:
+        config:
+            server:
+                git:
+                    force-pull: true
+                    uri: https://github.com/Somyadeep-Chowdhury/config-server-repo

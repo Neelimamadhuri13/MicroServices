@@ -1,0 +1,73 @@
+  version : "3"
+  services:
+
+    mongo:
+      image: mongo
+      ports:
+        - "27017:27017"
+      container_name: mongo
+      network_mode: host
+
+    config-server:
+      image: configservice-app
+      build: config-server/
+      restart: always
+      network_mode: host
+      container_name: spring-docker2
+      depends_on:
+        - mongo
+      ports:
+        - "8066:8066"
+      expose:
+        - 8066
+
+    eureka-service:
+      image: eurekaservice-app
+      build: eureka-service/
+      restart: always
+      network_mode: host
+      container_name: eureka-service-docker
+      ports:
+        - "9091:9091"
+      expose:
+        - 9091
+
+    TrackService:
+      image: trackservice-app
+      build: TrackService/
+      restart: always
+      network_mode: host
+      container_name: spring-docker1
+      depends_on:
+        - mongo
+      ports:
+        - "8088:8088"
+      expose:
+        - 8088
+
+    UserService:
+      image: userservice-app
+      build: UserService/
+      restart: always
+      network_mode: host
+      container_name: spring-docker
+      depends_on:
+        - mongo
+      ports:
+        - "8060:8060"
+      expose:
+        - 8193
+
+    zuul-service:
+      image: zuul-service
+      build: zuul-service/
+      restart: always
+      network_mode: host
+      container_name: spring-docker3
+      depends_on:
+        - mongo
+      ports:
+        - "8085:8085"
+      expose:
+        - 8085
+
